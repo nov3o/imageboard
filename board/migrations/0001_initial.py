@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
                 ('author', models.CharField(max_length=200)),
                 ('title', models.CharField(max_length=200)),
                 ('text', models.TextField()),
+                ('thread', models.IntegerField()),
                 ('published_date', models.DateTimeField(blank=True, null=True)),
             ],
         ),
