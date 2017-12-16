@@ -7,8 +7,12 @@ class Post(models.Model):
 	text = models.TextField()
 	published_date = models.DateTimeField(
 		blank=True, null=True)
+	thrd = models.IntegerField(
+		blank=True, null=True)
 
 	def publish(self):
+		self.thrd = self.id
+		self.save(update_fields=['thrd'])
 		self.published_date = timezone.now()
 		self.save()
 
