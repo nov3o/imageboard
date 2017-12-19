@@ -1,0 +1,164 @@
+p {
+	margin: 0
+}
+
+body {
+	margin: 0;
+	background: #fffadd;
+	font-family: 'Roboto', sans-serif;
+}
+
+body, a, a:link, a:visited {
+	color: #675000;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	color: #302600;
+}
+
+.header {
+	padding: 30px;
+}
+
+.page-title {
+	font-size: 50px
+}
+
+.page-sub-title {
+	font-size: 25px;
+	margin-left: 50px;
+	position: relative;
+	bottom: 10px;
+}
+
+form p {
+	margin-bottom: 5px;
+	display: table-row;
+}
+
+form p * {
+	display: table-cell;
+	font-size: 20px;
+}
+
+.post-form {
+    margin-left: 70px;
+    margin-bottom: 30px;
+}
+
+form p label {
+    text-align:  right;
+    position:  relative;
+    right: 10px;
+    vertical-align: top;
+}
+
+input, textarea {
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 1px solid #bababa;
+    padding: 2px;
+    padding-left: 5px;
+    outline: none;
+}
+
+textarea {
+    height:  100px;
+}
+
+button.save {
+    color:  #675000;
+    display: block;
+    width: 50%;
+    margin: auto;
+    outline: none;
+    font-size: 26px;
+}
+
+.thread {
+	border-top: 1px solid #675000;
+	padding: 30px 20px;
+}
+
+.post {
+	border: 1px solid #675000;
+	padding: 15px;
+	border-radius: 5px;
+	margin-top: 5px;
+	display: inline-block;
+	background: #fce0c3;
+	font-size: 26px;
+}
+
+.post:first-child {
+	border: none;
+	padding: 20px;
+	margin-top: 0;
+	background: #fffadd;
+}
+
+.errorlist {
+	margin-bottom: 4px;
+	list-style: none
+}
+
+.errorlist li {
+    display:  inline-block;
+    border: 1px solid #ff000075;
+    font-size: 18px;
+    padding:  2px;
+    border-radius: 5px;
+    background: #ff00001f;
+}
+
+.first-post-par {
+	position: absolute;
+	left: 500px;
+	padding-top: 25px;
+}
+
+.thread-number {
+	margin-left: 20px;
+	margin-right: 5px
+}
+
+.name {
+	color: #ba650e;
+}
+
+.bttn {
+    border: 2px solid #675000;
+    padding: 2px;
+    border-radius: 9px;
+    font-weight: bold;
+    margin-right: 5px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.thread-button:hover {
+	color: #302600;
+	border-color: #302600;
+}
+
+.title {
+	margin-top: 10px;
+}
+
+.form-block {
+	padding-left: 10px;
+	display: inline-block;
+	margin: 20px 60px;
+	padding-bottom: 20px;
+}
+
+.hide-form {
+	text-align: center;
+	font-size: 28px;
+	margin-bottom: 8px;
+	width: 518px;
+}

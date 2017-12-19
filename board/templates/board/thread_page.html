@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Тред №{{ thrd }}</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="{% static 'scripts/common.js' %}"></script>
+	</head>
+	<body>
+		<div class="header">
+			<p class="page-title"><a href="{% url 'post_list' %}">Hypnocrates</a></p>
+			<p class="page-sub-title">Тред №{{ thrd }}</p>
+		</div>
+		<div class="main-content">
+			<div class="form-block">
+				<p class="hide-form bttn">Открыть форму ответа</p>
+				<form method="POST" style="display: none" class="form">{% csrf_token %}
+					{{ form.as_p }}
+					<button type="submit" class="bttn save">Ответить</button>
+				</form>
+			</div>
+			<div class="thread">
+				{% for post in posts %}
+					<div class="post">
+						<p class="info"><span class="name">{{ post.author }}</span><span class="number">  №{{ post.pk }}</span><span class="date">  {{ post.published_date }}</span>
+						<p class="title"><b>{{ post.title }}</b></p>
+						<p>{{ post.text }}</p>
+					</div>
+					<br>
+				{% endfor %}
+			</div>
+		</div>
+	</body>
+</html>
