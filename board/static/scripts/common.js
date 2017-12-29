@@ -41,4 +41,8 @@ $(function(){
 			$(this).parent().parent().siblings().css('display', 'inline-block')
 		}
 	})
-});
+
+	if ($('.errorlist').html() != undefined) {
+		$('.hide-form').trigger('click')
+	}
+})

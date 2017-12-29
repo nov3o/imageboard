@@ -2,8 +2,8 @@ from django.db import models
 from django.utils import timezone
 
 class Post(models.Model):
-	author = models.CharField(max_length=200)
-	title = models.CharField(max_length=200)
+	author = models.CharField('Имя', max_length=70, blank=True)
+	title = models.CharField(max_length=100, null=True)
 	text = models.TextField()
 	published_date = models.DateTimeField(
 		blank=True, null=True)

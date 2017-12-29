@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, Reply
 from django.shortcuts import render, redirect
 
 def post_list(request):
@@ -9,10 +9,12 @@ def post_list(request):
 		form = PostForm(request.POST)
 		if form.is_valid():
 			thread = form.save(commit=False)
+			if thread.author == '':
+				thread.author = 'Товарищ'
 			thread.published_date = timezone.now()
 			thread.save()
 			thread.thrd = thread.id
-			thread.save(update_fields=['thrd'])
+			thread.save(update_fields=['thrd', 'author'])
 			return redirect('thread_page', thrd=thread.thrd)
 	else:
 		form = PostForm()
@@ -36,15 +38,19 @@ def thread_page(request, thrd):
 	posts = Post.objects.filter(thrd=thrd)
 
 	if request.method == "POST":
-		form = PostForm(request.POST)
+		form = Reply(request.POST)
 		if form.is_valid():
 			new_post = form.save(commit=False)
+			if new_post.author == '':
+				new_post.author = 'Товарищ'
+			if new_post.title == None:
+				new_post.title = ''
 			new_post.published_date = timezone.now()
 			new_post.save()
 			new_post.thrd = thrd
-			new_post.save(update_fields=['thrd'])
+			new_post.save(update_fields=['thrd', 'author'])
 			return redirect('thread_page', thrd=thrd)
 	else:
-		form = PostForm()
+		form = Reply()
 
 	return render(request, 'board/thread_page.html', {'posts': posts, 'form': form, 'thrd': thrd})

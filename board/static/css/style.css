@@ -35,13 +35,11 @@ a:hover {
 	bottom: 10px;
 }
 
-form p {
+form td {
 	margin-bottom: 5px;
-	display: table-row;
 }
 
-form p * {
-	display: table-cell;
+form td * {
 	font-size: 20px;
 }
 
@@ -50,20 +48,20 @@ form p * {
     margin-bottom: 30px;
 }
 
-form p label {
+form td:first-child {
     text-align:  right;
     position:  relative;
-    right: 10px;
-    vertical-align: top;
 }
 
 input, textarea {
-    margin-bottom: 5px;
     border-radius: 5px;
     border: 1px solid #bababa;
     padding: 2px;
     padding-left: 5px;
     outline: none;
+    font-family: 'Roboto', sans-serif;
+    color: #302600;
+    background: #fffdf1;
 }
 
 textarea {
@@ -77,6 +75,7 @@ button.save {
     margin: auto;
     outline: none;
     font-size: 26px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .thread {
@@ -102,14 +101,16 @@ button.save {
 }
 
 .errorlist {
-	margin-bottom: 4px;
-	list-style: none
+	margin-bottom: 0;
+	list-style: none;
+	margin-top: 0.5em;
+	padding-left: 0;
 }
 
 .errorlist li {
     display:  inline-block;
     border: 1px solid #ff000075;
-    font-size: 18px;
+    font-size: 20px;
     padding:  2px;
     border-radius: 5px;
     background: #ff00001f;
@@ -140,7 +141,7 @@ button.save {
     background: transparent;
 }
 
-.thread-button:hover {
+.bttn:hover {
 	color: #302600;
 	border-color: #302600;
 }
