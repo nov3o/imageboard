@@ -49,8 +49,8 @@ form td * {
 }
 
 form td:first-child {
-    text-align:  right;
-    position:  relative;
+    text-align: right;
+    position: relative;
 }
 
 input, textarea {
@@ -93,7 +93,7 @@ button.save {
 	font-size: 26px;
 }
 
-.post:first-child {
+.op {
 	border: none;
 	padding: 20px;
 	margin-top: 0;

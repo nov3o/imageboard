@@ -1,15 +1,15 @@
 from django import forms
-from .models import Post
+from .models import Thread, Post
 
-class PostForm(forms.ModelForm):																
+class ThreadForm(forms.ModelForm):																
 	text = forms.CharField(label='Текст', widget=forms.Textarea, error_messages={'required': 'Текст обязателен'})
-	title = forms.CharField(label='Заголовок', required=True, error_messages={'required': 'Заголовок обязателен'})
+	title = forms.CharField(label='Заголовок', required=False)
 
 	class Meta:
-		model = Post
+		model = Thread
 		fields = ('author', 'title', 'text',)
 
-class Reply(forms.ModelForm):																
+class PostForm(forms.ModelForm):																
 	text = forms.CharField(label='Текст', widget=forms.Textarea, error_messages={'required': 'Текст обязателен'})
 
 	class Meta:

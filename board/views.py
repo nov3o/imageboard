@@ -1,25 +1,28 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Post
-from .forms import PostForm, Reply
+from .models import Thread, Post
+from .forms import ThreadForm, PostForm
 from django.shortcuts import render, redirect
 
 def post_list(request):
 	if request.method == "POST":
-		form = PostForm(request.POST)
+		form = ThreadForm(request.POST)
 		if form.is_valid():
 			thread = form.save(commit=False)
 			if thread.author == '':
 				thread.author = 'Товарищ'
 			thread.published_date = timezone.now()
 			thread.save()
-			thread.thrd = thread.id
-			thread.save(update_fields=['thrd', 'author'])
-			return redirect('thread_page', thrd=thread.thrd)
+			return redirect('thread_page', thread_id=thread.id)
 	else:
-		form = PostForm()
+		form = ThreadForm()
 
-	posts = Post.objects.all()
+	#threads = Thread.objects.all()
+	#posts = Post.objects.all()
+	pairs = [ [thread, Post.objects.filter(thread_id=thread.id)] for thread in Thread.objects.all() ] 
+	# pairs is list of [ op-post, [post-in-thread-except-of-op-post-list] ]
+	#later change all() to ord_by('last_pub') 
+	"""
 	thrd_list = list(set([i.thrd for i in posts]))
 	last_pk_list = []
 	for i in thrd_list:
@@ -32,25 +35,27 @@ def post_list(request):
 	posts = []
 	for i in sorted_thrd:
 		posts.append(Post.objects.filter(thrd=i))
-	return render(request, 'board/post_list.html', {'posts': posts, 'form': form})
+	"""
+	return render(request, 'board/post_list.html', {'form': form, 'pairs': pairs}) 
+	#I'll extend QuerySet later
 
-def thread_page(request, thrd):
-	posts = Post.objects.filter(thrd=thrd)
+def thread_page(request, thread_id):
+	posts = Post.objects.filter(thread_id=thread_id)
 
 	if request.method == "POST":
-		form = Reply(request.POST)
+		form = PostForm(request.POST)
 		if form.is_valid():
+			#Добавить изменение last_pub
 			new_post = form.save(commit=False)
 			if new_post.author == '':
 				new_post.author = 'Товарищ'
-			if new_post.title == None:
-				new_post.title = ''
 			new_post.published_date = timezone.now()
+			new_post.thread_id = thread_id
 			new_post.save()
-			new_post.thrd = thrd
-			new_post.save(update_fields=['thrd', 'author'])
-			return redirect('thread_page', thrd=thrd)
+			return redirect('thread_page', thread_id=thread_id)
 	else:
-		form = Reply()
+		form = PostForm()
 
-	return render(request, 'board/thread_page.html', {'posts': posts, 'form': form, 'thrd': thrd})
+	return render(request, 'board/thread_page.html', 
+		{'posts': posts, 'form': form, 'thread_id': thread_id}
+	)
