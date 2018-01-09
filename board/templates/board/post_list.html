@@ -13,7 +13,7 @@
 			<p class="page-title"><a href="{% url 'post_list' %}">Hypnocrates</a></p>
 			<p class="page-sub-title">Главная</p>
 		</div>
-		<div class="main-content">
+		<div>
 			<div class="form-block">
 				<p class="hide-form bttn">Открыть окно создания треда</p>
 				<form method="POST" style="display: none" class="form">{% csrf_token %}
@@ -32,27 +32,37 @@
 					<button type="submit" class="bttn save">Создать тред</button>
 				</form>
 			</div>
-			{% for op, posts in pairs %}
+			{% for op, showed_posts, missed in thread_nodes %}
 				<div class="thread">
 					<div class="post op">
-						<p class="info">
+						<p>
 							<span class="name">{{ op.author }}</span>
-							<span class="number">№{{ op.id }}</span>
-							<span class="date">{{ op.published_date }}</span>
-							<a class="bttn" href="{% url 'thread_page' op.id %}">Ответ</a>
+							<span>№{{ op.count_number }}</span>
+							<span>{{ op.published_date }}</span>
+							<a class="bttn" href="{% url 'thread_page' op.count_number %}">Ответ</a>
 							<span class="bttn hide-thread">Скрыть</span>
 						</p>
-						<p class="title"><b>{{ op.title }}</b></p>
-						<p>{{ op.text }}</p>
+						<p>
+							<span>last_pub is {{ op.last_publish }} //in production delete this</span>
+						</p>
+						<div class="title-text">
+							<p class="title"><b>{{ op.title }}</b></p>
+							<p>{{ op.text }}</p>
+						</div>
 					</div>
 					<br>
-					{% for post in posts %}
+					{% if missed != 0 %}
+						<p class="missed">Пропущено {{ missed }} пост(ов)</p>
+					{% endif %}
+					{% for post in showed_posts %}
 						<div class="post">
-							<p class="info">
+							<p>
 								<span class="name">{{ post.author }}</span>
-								<span class="number">№{{ post.id }}</span>
-								<span class="date">{{ post.published_date }}</span>
-							<p>{{ post.text }}</p>
+								<span>№{{ post.count_number }}</span>
+								<span>{{ post.published_date }}</span>
+							<div class="title-text">
+								<p>{{ post.text }}</p>
+							</div>
 						</div>
 						<br>
 					{% endfor %}
