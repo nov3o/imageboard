@@ -16,7 +16,7 @@
 		<div>
 			<div class="form-block">
 				<p class="hide-form bttn">Открыть форму ответа</p>
-				<form method="POST" style="display: none" class="form">{% csrf_token %}
+				<form enctype="multipart/form-data" method="POST" style="display: none" class="form">{% csrf_token %}
 					<table>
 						{% for field in form %}
 							{% if field.errors %}
@@ -34,28 +34,62 @@
 			</div>
 			<div class="thread">
 				<div class="post op">
-					<p>
-						<span class="name">{{ op.author }}</span>
-						<span>№{{ op.count_number }}</span>
-						<span>{{ op.published_date }}</span>
-					</p>
-					<div class="title-text">
-						<p class="title"><b>{{ op.title }}</b></p>
-						<p>{{ op.text }}</p>
-					</div>
+					<table>
+						<tr>
+							<td>
+								{% if op.image %}
+									<a href="{{ op.image.url }}">
+										<img width="200" src="{{ op.image.url }}"/>
+									</a>
+								{% endif %}
+							</td>
+							<td>
+								<p>
+									<span class="name">{{ op.author }}</span>
+									<span>№{{ op.count_number }}</span>
+									<span>{{ op.published_date }}</span>
+								</p>
+								<div class="title-text">
+									{% if op.title %}
+										<p class="title"><b>{{ op.title }}</b></p>
+									{% endif %}
+									<p>{{ op.text|linebreaksbr }}</p>
+								</div>
+							</td>
+						</tr>
+					</table>
 				</div>
 				<br>
 				{% for post in posts %}
 					<div class="post">
-						<p>
-							<span class="name">{{ post.author }}</span>
-							<span>  №{{ post.count_number }}</span>
-							<span>  {{ post.published_date }}</span>
-						</p>
-						<div class="title-text">
-							<p>{{ post.text }}</p>
+							<table>
+								<tr>
+									<td>
+										<p>
+											<span class="name">{{ post.author }}</span>
+											<span>№{{ post.count_number }}</span>
+											<span>{{ post.published_date }}</span>
+										</p>
+									</td>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td>
+										{% if post.image %}
+											<a href="{{ post.image.url }}">
+												<img width="200" src="{{ post.image.url }}"/>
+											</a>
+										{% endif %}
+									</td>
+									<td>
+										<div class="title-text">
+											<p>{{ post.text|linebreaksbr }}</p>
+										</div>
+									</td>
+								</tr>
+							</table>
 						</div>
-					</div>
 					<br>
 				{% endfor %}
 			</div>

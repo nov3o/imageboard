@@ -16,7 +16,7 @@
 		<div>
 			<div class="form-block">
 				<p class="hide-form bttn">Открыть окно создания треда</p>
-				<form method="POST" style="display: none" class="form">{% csrf_token %}
+				<form method="POST" enctype="multipart/form-data" style="display: none" class="form">{% csrf_token %}
 					<table>
 						{% for field in form %}
 							{% if field.errors %}
@@ -35,36 +35,69 @@
 			{% for op, showed_posts, missed in thread_nodes %}
 				<div class="thread">
 					<div class="post op">
-						<p>
-							<span class="name">{{ op.author }}</span>
-							<span>№{{ op.count_number }}</span>
-							<span>{{ op.published_date }}</span>
-							<a class="bttn" href="{% url 'thread_page' op.count_number %}">Ответ</a>
-							<span class="bttn hide-thread">Скрыть</span>
-						</p>
-						<p>
-							<span>last_pub is {{ op.last_publish }} //in production delete this</span>
-						</p>
-						<div class="title-text">
-							<p class="title"><b>{{ op.title }}</b></p>
-							<p>{{ op.text }}</p>
-						</div>
+						<table>
+							<tr>
+								<td>
+									{% if op.image %}
+										<a href="{{ op.image.url }}">
+											<img width="200" src="{{ op.image.url }}"/>
+										</a>
+									{% endif %}
+								</td>
+								<td>
+									<p>
+										<span class="name">{{ op.author }}</span>
+										<span>№{{ op.count_number }}</span>
+										<span>{{ op.published_date }}</span>
+										<a class="bttn" href="{% url 'thread_page' op.count_number %}">Ответ</a>
+										<span class="bttn hide-thread">Скрыть</span>
+									</p>
+									<div class="title-text">
+										{% if op.title %}
+											<p class="title"><b>{{ op.title }}</b></p>
+										{% endif %}
+										<p>{{ op.text|linebreaksbr }}</p>
+									</div>
+								</td>
+							</tr>
+						</table>
 					</div>
-					<br>
 					{% if missed != 0 %}
 						<p class="missed">Пропущено {{ missed }} пост(ов)</p>
 					{% endif %}
 					{% for post in showed_posts %}
+						{% if showed_posts|first != post %}
+							<br>
+						{% endif %}
 						<div class="post">
-							<p>
-								<span class="name">{{ post.author }}</span>
-								<span>№{{ post.count_number }}</span>
-								<span>{{ post.published_date }}</span>
-							<div class="title-text">
-								<p>{{ post.text }}</p>
-							</div>
+							<table>
+								<tr>
+									<td>
+										<p>
+											<span class="name">{{ post.author }}</span>
+											<span>№{{ post.count_number }}</span>
+											<span>{{ post.published_date }}</span>
+										</p>
+									</td>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td>
+										{% if post.image %}
+											<a href="{{ post.image.url }}">
+												<img width="200" src="{{ post.image.url }}"/>
+											</a>
+										{% endif %}
+									</td>
+									<td>
+										<div class="title-text">
+											<p>{{ post.text|linebreaksbr }}</p>
+										</div>
+									</td>
+								</tr>
+							</table>
 						</div>
-						<br>
 					{% endfor %}
 					<br>
 				</div>

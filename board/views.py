@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 def post_list(request):
 	if request.method == "POST":
-		form = ThreadForm(request.POST)
+		form = ThreadForm(request.POST, request.FILES)
 		if form.is_valid():
 			thread = form.save(commit=False)
 			if thread.author == '':
@@ -39,7 +39,7 @@ def thread_page(request, thread_number):
 	op = Thread.objects.get(count_number=thread_number)
 
 	if request.method == "POST":
-		form = PostForm(request.POST)
+		form = PostForm(request.POST, request.FILES)
 		if form.is_valid():
 			new_post = form.save(commit=False)
 			if new_post.author == '':

@@ -170,3 +170,12 @@ button.save {
 	margin-bottom: 5px;
 	color: #84743c;
 }
+
+.title {
+	margin-bottom: 5px;
+}
+
+.post td:nth-child(2) {
+	vertical-align: top;
+	margin-left: 20px
+}
