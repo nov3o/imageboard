@@ -33,21 +33,22 @@
 				</form>
 			</div>
 			<div class="thread">
-				<div class="post op">
+				<div id="{{ op.count_number }}" class="post op">
 					<table>
 						<tr>
 							<td>
 								{% if op.image %}
-									<a href="{{ op.image.url }}">
+									<a target="_blanc" href="{{ op.image.url }}">
 										<img width="200" src="{{ op.image.url }}"/>
 									</a>
 								{% endif %}
 							</td>
 							<td>
-								<p>
+								<p class="info">
 									<span class="name">{{ op.author }}</span>
 									<span>№{{ op.count_number }}</span>
 									<span>{{ op.published_date }}</span>
+									<span class="bttn reply-adding disable">+</span>
 								</p>
 								<div class="title-text">
 									{% if op.title %}
@@ -60,35 +61,42 @@
 					</table>
 				</div>
 				<br>
-				{% for post in posts %}
-					<div class="post">
+				{% for post, replies in post_nodes %}
+					<div id="{{ post.count_number }}" class="post">
+							<p class="info">
+								<span class="name">{{ post.author }}</span>
+								<span>№{{ post.count_number }}</span>
+								<span>{{ post.published_date }}</span>
+								<span class="bttn reply-adding disable">+</span>
+							</p>
 							<table>
 								<tr>
-									<td>
-										<p>
-											<span class="name">{{ post.author }}</span>
-											<span>№{{ post.count_number }}</span>
-											<span>{{ post.published_date }}</span>
-										</p>
-									</td>
-								</tr>
-							</table>
-							<table>
-								<tr>
-									<td>
+									<td {% if not post.image %} style="display: none" {% endif %}>
 										{% if post.image %}
-											<a href="{{ post.image.url }}">
+											<a target="_blanc" href="{{ post.image.url }}">
 												<img width="200" src="{{ post.image.url }}"/>
 											</a>
 										{% endif %}
 									</td>
 									<td>
-										<div class="title-text">
+										<div>
 											<p>{{ post.text|linebreaksbr }}</p>
 										</div>
 									</td>
 								</tr>
 							</table>
+							{% if replies %}
+								<p class="replies">
+									<span>Ответы: </span>
+									{% for rep in replies %}
+										{% if rep == replies|last %}
+											<a href="#{{ rep }}"><span>{{ rep }}</span></a>
+										{% else %}
+											<a href="#{{ rep }}"><span>{{ rep }}</span></a>,
+										{% endif %}
+									{% endfor %}
+								</p>
+							{% endif %}
 						</div>
 					<br>
 				{% endfor %}

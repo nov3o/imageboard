@@ -39,7 +39,7 @@
 							<tr>
 								<td>
 									{% if op.image %}
-										<a href="{{ op.image.url }}">
+										<a target="_blanc" href="{{ op.image.url }}">
 											<img width="200" src="{{ op.image.url }}"/>
 										</a>
 									{% endif %}
@@ -52,7 +52,7 @@
 										<a class="bttn" href="{% url 'thread_page' op.count_number %}">Ответ</a>
 										<span class="bttn hide-thread">Скрыть</span>
 									</p>
-									<div class="title-text">
+									<div>
 										{% if op.title %}
 											<p class="title"><b>{{ op.title }}</b></p>
 										{% endif %}
@@ -70,22 +70,16 @@
 							<br>
 						{% endif %}
 						<div class="post">
-							<table>
-								<tr>
-									<td>
-										<p>
-											<span class="name">{{ post.author }}</span>
-											<span>№{{ post.count_number }}</span>
-											<span>{{ post.published_date }}</span>
-										</p>
-									</td>
-								</tr>
-							</table>
+							<p>
+								<span class="name">{{ post.author }}</span>
+								<span>№{{ post.count_number }}</span>
+								<span>{{ post.published_date }}</span>
+							</p>
 							<table>
 								<tr>
 									<td>
 										{% if post.image %}
-											<a href="{{ post.image.url }}">
+											<a target="_blanc" href="{{ post.image.url }}">
 												<img width="200" src="{{ post.image.url }}"/>
 											</a>
 										{% endif %}

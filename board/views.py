@@ -3,6 +3,21 @@ from .models import Thread, Post
 from .forms import ThreadForm, PostForm
 from django.shortcuts import render, redirect
 
+def reply_format(reply, thread_number, post_number):
+	lst = list(set(reply.split()))
+	post_list = [
+		str(post.count_number) for post in Post.objects.filter(thread_number=thread_number)
+	]
+	post_list.append(thread_number)
+	lst = [i for i in lst if i in post_list]
+	for count_number in lst:
+		if count_number == str(thread_number):
+			post = Thread.objects.get(count_number=int(thread_number))
+		else:
+			post = Post.objects.get(count_number=int(count_number))
+		post.replies += str(post_number) + ' '
+		post.save()
+
 def post_list(request):
 	if request.method == "POST":
 		form = ThreadForm(request.POST, request.FILES)
@@ -36,6 +51,9 @@ def post_list(request):
 
 def thread_page(request, thread_number):
 	posts = Post.objects.filter(thread_number=thread_number)
+	post_nodes = []
+	for i in posts:
+		post_nodes.append([i, i.replies.split()])
 	op = Thread.objects.get(count_number=thread_number)
 
 	if request.method == "POST":
@@ -47,6 +65,9 @@ def thread_page(request, thread_number):
 			new_post.published_date = timezone.now() 
 			new_post.thread_number = thread_number
 			new_post.count_number = get_max(Post.objects.all(), Thread.objects.all())
+			if new_post.replies:
+				reply_format(new_post.replies, thread_number, new_post.count_number)
+				new_post.replies = ''
 			new_post.save()
 
 			op.last_publish = new_post.published_date
@@ -57,7 +78,7 @@ def thread_page(request, thread_number):
 		form = PostForm()
 
 	return render(request, 'board/thread_page.html', 
-		{'posts': posts, 'form': form, 'thread_number': thread_number, 'op': op}
+		{'post_nodes': post_nodes, 'form': form, 'thread_number': thread_number, 'op': op}
 	)
 
 

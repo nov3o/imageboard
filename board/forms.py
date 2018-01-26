@@ -25,6 +25,12 @@ class PostForm(forms.ModelForm):
 		},
 		required=False
 	)
+	replies = forms.CharField(
+		label='', 
+		required=False, 
+		widget=forms.Textarea(attrs={'style':'display: none;'})
+	)
+
 	class Meta:
 		model = Post
-		fields = ('author', 'text', 'image')
+		fields = ('author', 'text', 'image', 'replies')

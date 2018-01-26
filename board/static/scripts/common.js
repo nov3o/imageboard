@@ -12,10 +12,12 @@ $(function(){
 			case 'Закрыть форму ответа':
 				$('.hide-form').text('Открыть форму ответа')
 				$('.form').css('display', 'none')
+				$('.reply-adding').attr('class', 'disable reply-adding bttn')
 				break
 			case 'Открыть форму ответа':
 				$('.hide-form').text('Закрыть форму ответа')
 				$('.form').css('display', 'block')
+				$('.reply-adding').attr('class', 'reply-adding bttn')
 				break
 		}
 	})
@@ -48,4 +50,38 @@ $(function(){
 	if ($('.errorlist').html() != undefined) {
 		$('.hide-form').trigger('click')
 	}
+
+	$('.reply-adding').click(function (){
+		if ($('form label').eq(3).text() == '') {
+			$('form label').eq(3).text('Ответы:')
+			var td = $('form label').eq(3).parent().next()
+			$(td).append('<div class="input-like" style="min-height: 26px;"></div>')
+			replyInput = $(td).find('div')
+			fullNum = ''
+		}
+		replyNum = $(this).parent().children().eq(1).text().slice(1)
+		fullNum += replyNum + ' '
+		$(replyInput).append('<span class="reply-input">' + 
+			replyNum + ' <span class="reply-delete">×</span>'
+		)
+		$(replyInput).find('.reply-delete').click(function () {
+			var replyText = $(this).parent().text()
+			var replyNum = replyText.slice(0, replyText.length-2)
+			divChildren = $(this).parent().parent().children()
+			if (divChildren.length == 1) {
+				$('form label').eq(3).text('')
+				$(replyInput).remove()
+				$('#id_replies').val('')
+			}
+			else {
+				inpValue = $('#id_replies').val()
+				replacedValue = inpValue.replace(replyNum + ' ', '') 
+				$('#id_replies').val(replacedValue)
+			}
+			$(this).parent().remove()
+			$('#' + replyNum + ' p .reply-adding').attr('style', '')
+		})
+		$(this).css('display', 'none')
+		$('#id_replies').val(fullNum)
+	})
 })
