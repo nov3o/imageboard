@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = '5trfjuu^mpsh@g#5^jm+w!qc*zk^2zna7sf(g)hvio*lpb3*c^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 # With DEBUG = False 404 page will appear, but staticfiles wont be found
 
