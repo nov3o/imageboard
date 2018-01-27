@@ -25,8 +25,10 @@ SECRET_KEY = '5trfjuu^mpsh@g#5^jm+w!qc*zk^2zna7sf(g)hvio*lpb3*c^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+# With DEBUG = False 404 page will appear, but staticfiles wont be found
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -70,6 +72,10 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_DIRS = (
+    'C:/Users/Илья/Desktop/Imageboard/board/templates',
+)
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 

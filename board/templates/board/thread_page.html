@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load split %}
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -54,11 +56,23 @@
 									{% if op.title %}
 										<p class="title"><b>{{ op.title }}</b></p>
 									{% endif %}
-									<p>{{ op.text|linebreaksbr }}</p>
+									<p class="text">{{ op.text|linebreaksbr }}</p>
 								</div>
 							</td>
 						</tr>
 					</table>
+					{% if op.replies %}
+						<p class="replies">
+							<span>Ответы: </span>
+							{% for rep in op.replies|split %}
+								{% if rep == op.replies|split|last %}
+									<a href="#{{ rep }}"><span>№{{ rep }}</span></a>
+								{% else %}
+									<a href="#{{ rep }}"><span>№{{ rep }}</span></a>,
+								{% endif %}
+							{% endfor %}
+						</p>
+					{% endif %}
 				</div>
 				<br>
 				{% for post, replies in post_nodes %}
@@ -80,7 +94,7 @@
 									</td>
 									<td>
 										<div>
-											<p>{{ post.text|linebreaksbr }}</p>
+											<p class="text">{{ post.text|linebreaksbr }}</p>
 										</div>
 									</td>
 								</tr>
@@ -90,9 +104,9 @@
 									<span>Ответы: </span>
 									{% for rep in replies %}
 										{% if rep == replies|last %}
-											<a href="#{{ rep }}"><span>{{ rep }}</span></a>
+											<a href="#{{ rep }}"><span>№{{ rep }}</span></a>
 										{% else %}
-											<a href="#{{ rep }}"><span>{{ rep }}</span></a>,
+											<a href="#{{ rep }}"><span>№{{ rep }}</span></a>,
 										{% endif %}
 									{% endfor %}
 								</p>

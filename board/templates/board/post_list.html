@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load split %}
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -45,22 +47,36 @@
 									{% endif %}
 								</td>
 								<td>
-									<p>
+									<p class="info">
 										<span class="name">{{ op.author }}</span>
 										<span>№{{ op.count_number }}</span>
 										<span>{{ op.published_date }}</span>
 										<a class="bttn" href="{% url 'thread_page' op.count_number %}">Ответ</a>
 										<span class="bttn hide-thread">Скрыть</span>
 									</p>
-									<div>
+									<div class="title-text">
 										{% if op.title %}
 											<p class="title"><b>{{ op.title }}</b></p>
 										{% endif %}
-										<p>{{ op.text|linebreaksbr }}</p>
+										<p class="text">{{ op.text|linebreaksbr }}</p>
 									</div>
 								</td>
 							</tr>
 						</table>
+						{% if op.replies %}
+						<p class="replies">
+							<span>Ответы: </span>
+							{% for rep in op.replies|split %}
+								{% if rep == op.replies|split|last %}
+									<a href="{% url 'thread_page' op.count_number %}#{{ rep }}">
+										<span>№{{ rep }}</span></a>
+								{% else %}
+									<a href="{% url 'thread_page' op.count_number %}#{{ rep }}">
+										<span>№{{ rep }}</span></a>,
+								{% endif %}
+							{% endfor %}
+						</p>
+					{% endif %}
 					</div>
 					{% if missed != 0 %}
 						<p class="missed">Пропущено {{ missed }} пост(ов)</p>
@@ -70,14 +86,14 @@
 							<br>
 						{% endif %}
 						<div class="post">
-							<p>
+							<p class="info">
 								<span class="name">{{ post.author }}</span>
 								<span>№{{ post.count_number }}</span>
 								<span>{{ post.published_date }}</span>
 							</p>
 							<table>
 								<tr>
-									<td>
+									<td {% if not post.image %} style="display: none" {% endif %}>
 										{% if post.image %}
 											<a target="_blanc" href="{{ post.image.url }}">
 												<img width="200" src="{{ post.image.url }}"/>
@@ -85,12 +101,26 @@
 										{% endif %}
 									</td>
 									<td>
-										<div class="title-text">
-											<p>{{ post.text|linebreaksbr }}</p>
+										<div>
+											<p class="text">{{ post.text|linebreaksbr }}</p>
 										</div>
 									</td>
 								</tr>
 							</table>
+							{% if post.replies %}
+								<p class="replies">
+									<span>Ответы: </span>
+									{% for rep in post.replies|split %}
+											{% if rep != post.replies|split|last %}
+												<a href="{% url 'thread_page' post.thread_number %}#{{ rep }}">
+													<span>№{{ rep }}</span></a>,
+											{% else %}
+												<a href="{% url 'thread_page' post.thread_number %}#{{ rep }}">
+													<span>№{{ rep }}</span></a>
+											{% endif %}
+									{% endfor %}
+								</p>
+							{% endif %}
 						</div>
 					{% endfor %}
 					<br>

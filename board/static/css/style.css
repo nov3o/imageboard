@@ -221,3 +221,20 @@ button.save {
 .info {
 	color: #4a310b;
 }
+
+span.bttn {
+	color: #675000;
+}
+
+.extend {
+	font-size: 0.8em;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+	bottom: 20px;
+	background: linear-gradient(to top, #bb9f81, #fce0c3);
+}
+
+.extend:hover {
+	color: #302600;
+}

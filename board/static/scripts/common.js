@@ -84,4 +84,18 @@ $(function(){
 		$(this).css('display', 'none')
 		$('#id_replies').val(fullNum)
 	})
+
+	$('.text').each(function () {
+		if ($(this).innerHeight() > '150') {
+			$(this).after('<p class="extend">Показать полностью</p>')
+			$(this).css('height', '150px')
+			$(this).css('overflow', 'hidden')
+		}
+	})
+
+	$('.extend').click(function () {
+		$(this).prev().css('height', 'auto')
+		$(this).prev().css('overflow', 'visible')
+		$(this).remove()
+	})
 })
