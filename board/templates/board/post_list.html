@@ -65,20 +65,21 @@
 							</tr>
 						</table>
 						{% if op.replies %}
-						<p class="replies">
-							<span>Ответы: </span>
-							{% for rep in op.replies|split %}
-								{% if rep == op.replies|split|last %}
-									<a href="{% url 'thread_page' op.count_number %}#{{ rep }}">
-										<span>№{{ rep }}</span></a>
-								{% else %}
-									<a href="{% url 'thread_page' op.count_number %}#{{ rep }}">
-										<span>№{{ rep }}</span></a>,
-								{% endif %}
-							{% endfor %}
-						</p>
-					{% endif %}
+							<p class="replies">
+								<span>Ответы: </span>
+								{% for rep in op.replies|split %}
+									{% if rep == op.replies|split|last %}
+										<a href="{% url 'thread_page' op.count_number %}#{{ rep }}">
+											<span>№{{ rep }}</span></a>
+									{% else %}
+										<a href="{% url 'thread_page' op.count_number %}#{{ rep }}">
+											<span>№{{ rep }}</span></a>,
+									{% endif %}
+								{% endfor %}
+							</p>
+						{% endif %}
 					</div>
+					<br>
 					{% if missed != 0 %}
 						<p class="missed">Пропущено {{ missed }} пост(ов)</p>
 					{% endif %}
