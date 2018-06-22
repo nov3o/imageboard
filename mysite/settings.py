@@ -74,7 +74,7 @@ TEMPLATES = [
 ]
 
 TEMPLATE_DIRS = (
-    'C:/Users/Илья/Desktop/Imageboard/board/templates',
+    ...'/Imageboard/board/templates',
 )
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
